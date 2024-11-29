@@ -1,3 +1,28 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const signupBtn = document.getElementById("signupBtn");
+    const loginBtn = document.getElementById("loginBtn");
+    const signupForm = document.getElementById("sign-up-form");
+    const loginForm = document.getElementById("loginInputForm");
+
+    signupBtn.addEventListener("click", function () {
+        signupForm.classList.remove("d-none");
+        loginForm.classList.add("d-none");
+        signupBtn.classList.add("btn-orange");
+        loginBtn.classList.remove("btn-orange");
+    });
+
+    loginBtn.addEventListener("click", function () {
+        loginForm.classList.remove("d-none");
+        signupForm.classList.add("d-none");
+        loginBtn.classList.add("btn-orange");
+        signupBtn.classList.remove("btn-orange");
+    });
+});
+
+
+
+
+
 signUp();
 signIn();
 imageUploaderEmployee();

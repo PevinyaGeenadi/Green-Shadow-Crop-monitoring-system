@@ -35,10 +35,21 @@ body {
     color: white;
     border: none;
 }
+.btn-orange:active {
+    background-color: #e18924 !important;
+    color: white !important;
+}
 
 .btn-orange:hover {
-    background-color: #e68900;
+    background-color: darkorange;
 }
+form {
+    transition: border 0.3s ease;
+}
+
+
+
+
 
 .form-control {
     border-radius: 8px;
@@ -84,6 +95,10 @@ body {
 .login-btn:hover {
     background-color: #d32f2f;
 }
+
+
+
+
 .form-container h5 {
     margin-bottom: 30px;
     font-size: 1.5rem;
