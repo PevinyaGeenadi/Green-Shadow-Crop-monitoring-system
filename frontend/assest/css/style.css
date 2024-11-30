@@ -96,6 +96,21 @@ form {
     background-color: #d32f2f;
 }
 
+/* Active button (blue) */
+.btn-active {
+    background-color: blue;
+    color: white;
+    border: none;
+}
+
+/* Inactive button (black) */
+.btn-inactive {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+
 
 
 

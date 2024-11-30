@@ -4,20 +4,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const signupForm = document.getElementById("sign-up-form");
     const loginForm = document.getElementById("loginInputForm");
 
+    // Initial states
+    signupForm.classList.add("d-none"); // Hide sign-up form initially
+    loginForm.classList.remove("d-none"); // Show login form initially
+    signupBtn.classList.add("btn-inactive");
+    loginBtn.classList.add("btn-active");
+
+    // Event listener for SIGN UP button
     signupBtn.addEventListener("click", function () {
         signupForm.classList.remove("d-none");
         loginForm.classList.add("d-none");
-        signupBtn.classList.add("btn-orange");
-        loginBtn.classList.remove("btn-orange");
+        signupBtn.classList.add("btn-active");
+        signupBtn.classList.remove("btn-inactive");
+        loginBtn.classList.add("btn-inactive");
+        loginBtn.classList.remove("btn-active");
     });
 
+    // Event listener for LOGIN button
     loginBtn.addEventListener("click", function () {
         loginForm.classList.remove("d-none");
         signupForm.classList.add("d-none");
-        loginBtn.classList.add("btn-orange");
-        signupBtn.classList.remove("btn-orange");
+        loginBtn.classList.add("btn-active");
+        loginBtn.classList.remove("btn-inactive");
+        signupBtn.classList.add("btn-inactive");
+        signupBtn.classList.remove("btn-active");
     });
 });
+
+document.getElementById("signupBtn").addEventListener("click", () => alert("Signup clicked!"));
+document.getElementById("loginBtn").addEventListener("click", () => alert("Login clicked!"));
+
+
+document.getElementById("register").addEventListener("click", () => alert("Signup successfully!"));
+document.getElementById("loginNow").addEventListener("click", () => alert("Login successfully!"));
 
 
 
