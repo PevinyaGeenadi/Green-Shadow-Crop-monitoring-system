@@ -31,14 +31,48 @@
         </div>
 
         <!-- Sidebar Links -->
-        <nav class="mt-10">
-            <a class="flex items
-            -center mt-4 py-2 px-6 bg-green-500 bg-opacity-25 text-green-700" href="dashboard.html">
-                <i class="fas fa-tachometer-alt"></i>
-                <span class="mx-3">Dashboard</span>
 
         <nav class="flex-1 px-4">
+            <button onclick="showSection('dashboard')"
+                    class="nav-item lickable-btn w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 text-gray-700 hover:text-white">
+                <i class="fas fa-chart-line w-5"></i>
+                <span class="font-medium">Dashboard</span>
+            </button>
 
+            <button onclick="showSection('crops')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 text-gray-700 hover:text-white">
+                <i class="fas fa-tag w-5"></i>
+                <span class="font-medium">Crops</span>
+            </button>
+            <button onclick="showSection('staff')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-box w-5"></i>
+                <span class="font-medium">Staff</span>
+            </button>
+
+            <button onclick="showSection('vehical')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-warehouse w-5"></i>
+                <span class="font-medium">Vehical</span>
+            </button>
+
+            <button onclick="showSection('equipment')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-tag w-5"></i>
+                <span class="font-medium">Equipment</span>
+            </button>
+            <button onclick="showSection('field')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-warehouse w-5"></i>
+                <span class="font-medium">Field</span>
+            </button>
+            <button onclick="showSection('user')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-tag w-5"></i>
+                <span class="font-medium">User</span>
+            </button>
+            <button onclick="showSection('log')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-tag w-5"></i>
+                <span class="font-medium">Create Log</span>
+            </button>
+            <button onclick="showSection('addLog')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 mb-2 rounded-lg transition-all duration-200 hover:bg-gradient-to-r from-green-600 to-lime-500 hover:shadow-lg transform hover:scale-105 hover:text-white">
+                <i class="fas fa-tag w-5"></i>
+                <span class="font-medium">Add Log</span>
+            </button>
 
         </nav>
 
