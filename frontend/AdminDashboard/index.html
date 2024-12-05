@@ -1,431 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrative Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title> Green Shadow crop monitoring system </title>
+    <link rel="stylesheet" href="assets/css/8.0.1_normalize.css">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e8f5e9;
-        }
-        .navbar {
-            background-color: #4caf50;
-            height: 80px;
-        }
-        .navbar-brand, .nav-link, .logout-btn {
-            color: #fff !important;
-        }
-        .sidebar {
-            background-color: #a5d6a7;
-            height: 100vh;
-        }
-        .sidebar a {
-            display: block;
-            color: #4caf50;
-            padding: 15px;
-            text-decoration: none;
-        }
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        .sidebar a:hover {
-            background-color: #81c784;
-            color: white;
-        }
-        .main-content {
-            padding: 20px;
-        }
-        .table {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body>
-
-<!-- Header -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Administrative Dashboard</a>
-        <button class="btn btn-danger logout-btn">Logout</button>
-
-
-    </div>
-</nav>
 <div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 sidebar">
-            <a href="#">Home</a>
-            <a href="#">Dashboard Overview</a>
+    <div class="row vh-100 ">
+        <!-- Left Section -->
+        <div class="col-lg-6 d-flex align-items-center justify-content-center position-relative">
+            <img src="assets/img/logo.png" alt="Map My Crop Logo" class="logo mb-4">
+            <div>
 
-            <!-- Dropdown -->
-            <a href="#" data-bs-toggle="collapse" data-bs-target="#managementDropdown">Managements</a>
-            <div class="collapse" id="managementDropdown">
-                <a href="#">Staff Management</a>
-                <a href="#">Vehicle Management</a>
-                <a href="#">Equipment Management</a>
-            </div>
-
-            <!-- Crop Monitoring -->
-            <a href="#" data-bs-toggle="collapse" data-bs-target="#cropMonitoringDropdown">Crop Monitoring</a>
-            <div class="collapse" id="cropMonitoringDropdown">
-                <a href="#"style="color: gray; cursor: not-allowed;" title="Restricted">Crop Data (View Only)</a>
-                <a href="#">Field Data</a> <!-- view only -->
-                <a href="#">Monitoring Logs</a> <!-- view only -->
-            </div>
-
-            <!-- Reports -->
-            <a href="#" data-bs-toggle="collapse" data-bs-target="#reportsDropdown">Reports</a>
-            <div class="collapse" id="reportsDropdown">
-                <a href="#" style="color: gray; cursor: not-allowed;" title="Restricted">Staff Report (View Only)</a>
-                <a href="#" style="color: gray; cursor: not-allowed;" title="Restricted">Vehicle Report (View Only)</a>
-                <a href="#" style="color: gray; cursor: not-allowed;" title="Restricted">Equipment Report (View Only)</a>
-                <a href="#" style="color: gray; cursor: not-allowed;" title="Restricted">Crop Report (View Only)</a>
-                <a href="#" style="color: gray; cursor: not-allowed;" title="Restricted">Field Report (View Only)</a>
-                <a href="#" style="color: gray; cursor: not-allowed;" title="Restricted">Monitoring Log Report (View Only)</a>
-                <a href="#">Daily Report</a> <!-- view only -->
-                <a href="#">Weekly Report</a> <!-- view only -->
-                <a href="#">Monthly Report</a> <!-- view only -->
-           </div>
-
-            <!-- Settings -->
-            <a href="#" data-bs-toggle="collapse" data-bs-target="#settingsDropdown">Settings</a>
-            <div class="collapse" id="settingsDropdown">
-                <a href="#">Profile Settings</a>
-                <a href="#">System Preferences</a>
-            </div>
-
-
-
-        </div>
-        <!-- Main Content -->
-        <div class="col-md-10 main-content">
-            <h2>Welcome, Administrative User</h2>
-            <p>You can manage staff, vehicles, and equipment data. Viewing access only for restricted data.</p>
-
-            <!-- Staff Table -->
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    Staff Details
-                </div>
-
-                <div class="card-body">
-                    <div class="btnGroup float-end">
-                        <button type="button" class="btn btn-outline-primary  " id="addEmployee"><span
-                                class="material-symbols-outlined"></span> Add Staff
-                        </button>
-
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
-                    <button class="btn btn-success mb-3" onclick="addStaff()">Add Staff</button>
-                    <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Staff ID</th>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Contact</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>S-001</td>
-                    <td>John Doe</td>
-                    <td>Manager</td>
-                    <td>john.doe@example.com</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>S-002</td>
-                    <td>Jane Smith</td>
-                    <td>Technician</td>
-                    <td>jane.smith@example.com</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="assets/img/farm_image-1.png" alt="Slide 1">
+                            <div class="carousel-caption d-none d-md-block">
+                                <p >Reliable Weather Forecast and Historical Data</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/farm_image-3.png" alt="Slide 2">
+                            <div class="carousel-caption d-none d-md-block">
+                                <p>Actionable Weather and Crop Insights</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/farm_image-4.png" alt="Slide 3">
+                            <div class="carousel-caption d-none d-md-block">
+                                <p>Enhanced Crop Health Monitoring</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
         </div>
-            </div>
-            <!-- Add staff form -->
-            <div class="card mb-4" id="addStaffForm" style="display: none;">
-                <div class="card-header bg-primary text-white">
-                    Add Staff
-                </div>
-                <div class="card-body">
-                    <form>
+
+        <!-- Right Section -->
+        <!-- Login and Sign-Up Form -->
+        <div class="col-lg-6 d-flex align-items-center justify-content-center bg-green">
+
+            <div class="form-container">
+
+                <div class="p-4 rounded border border-light form-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="text-white">Real-time crop monitoring for smarter farming decisions</h5>
+                    </div>
+                    <div class="d-flex justify-content-center mb-3">
+                        <button class="btn  me-2" data-bs-toggle="modal"
+                                id="signupBtn" type="button">SIGN UP</button>
+                        <button class="btn me-2" data-bs-toggle="modal" id="loginBtn" type="button">LOGIN</button>
+                    </div>
+
+                    <!-- Sign-Up Form -->
+                    <form id="signupForm" class="d-none">
                         <div class="mb-3">
-                            <label for="staffName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="staffName" placeholder="Enter staff name">
+                            <label for="sign-up-email" class="form-label text-white">Email:</label>
+                            <input type="email" id="sign-up-email" class="form-control" placeholder="Enter your email">
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Enter email">
+                            <label for="sign-up-password" class="form-label text-white">Password:</label>
+                            <input type="password" id="sign-up-password" class="form-control" placeholder="Enter your password">
                         </div>
+
                         <div class="mb-3">
-                            <label for="staffPosition" class="form-label">Position</label>
-                            <input type="text" class="form-control" id="staffPosition" placeholder="Enter staff position">
+                            <label for="role" class="form-label text-white">Role:</label>
+                            <select id="role" class="form-control">
+                                <option value="MANAGER">Manager</option>
+                                <option value="ADMINISTRATIVE">Administrative</option>
+                                <option value="SCIENTIST">Scientist</option>
+                                <option value="OTHER">Other</option>
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="staffContact" class="form-label">Contact</label>
-                            <input type="email" class="form-control" id="staffContact" placeholder="Enter staff contact">
-                        </div>
-                        <div class="mb-3">
-                            <label for="date_joined">Date Joined</label>
-                            <input type="date" id="date_joined" name="date_joined" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-danger" onclick="cancelStaff()">Cancel</button>
+                        <button type="submit" id = "formsignUp" class="btn btn-danger w-100" >Register</button>
                     </form>
-                </div>
-            </div>
 
-            <!-- Vehicle Table -->
-            <div class="card mb-4">
-                <div class="card-header bg-success text-white">
-                    Vehicle Details
-                </div>
-                <div class="card-body">
-                    <button class="btn btn-success mb-3" onclick="addVehicle()">Add Vehicle</button>
-                    <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Vehicle ID</th>
-                    <th>License Plate</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>V-001</td>
-                    <td>ABC-123</td>
-                    <td>Available</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>V-002</td>
-                    <td>XYZ-456</td>
-                    <td>Out of Service</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-                </div>
-            </div>
 
-            <!-- Equipment Table -->
-            <div class="card mb-4">
-                <div class="card-header bg-warning text-white">
-                    Equipment Details
-                </div>
-                <div class="card-body">
-                    <button class="btn btn-success mb-3" onclick="addEquipment()">Add Equipment</button>
-                    <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Equipment ID</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>E-001</td>
-                    <td>Drone</td>
-                    <td>Available</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>E-002</td>
-                    <td>GPS Tracker</td>
-                    <td>Out of Service</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-                </div>
-            </div>
 
-            <!-- crop data table -->
-            <div class="card mb-4">
-                <div class="card-header bg-warning text-white">
-                    Crop Data
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Crop ID</th>
-                    <th>Name</th>
-                    <th>Location</th>
+                    <!-- Login Form -->
+                    <div class="form-container">
+                        <i class="uil uil-times from_close"></i>
+                        <div class="form login-form">
 
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>C-001</td>
-                    <td>Rice</td>
-                    <td>Field 1</td>
-
-                </tr>
-                <tr>
-                    <td>C-002</td>
-                    <td>Wheat</td>
-                    <td>Field 2</td>
-
-                </tr>
-                </tbody>
-            </table>
-                </div>
-            </div>
-
-            <!-- field data table -->
-            <div class="card mb-4">
-                <div class="card-header bg-warning text-white">
-                    Field Data
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Field ID</th>
-                    <th>Location</th>
-                    <th>Size</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>F-001</td>
-                    <td>Field 1</td>
-                    <td>10 acres</td>
-
-                </tr>
-                <tr>
-                    <td>F-002</td>
-                    <td>Field 2</td>
-                    <td>15 acres</td>
-
-                </tr>
-                </tbody>
-            </table>
-                </div>
-            </div>
-
-            <!-- Monitoring Logs table -->
-            <div class="card mb-4">
-                <div class="card-header bg-warning text-white">
-                    Monitoring Logs
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Log ID</th>
-                    <th>Field ID</th>
-                    <th>Staff ID</th>
-                    <th>Vehicle ID</th>
-                    <th>Equipment ID</th>
-                    <th>Time</th>
-                    <th>Activity</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>L-001</td>
-                    <td>F-001</td>
-                    <td>S-001</td>
-                    <td>V-001</td>
-                    <td>E-001</td>
-                    <td>10:00 AM</td>
-                    <td>Monitoring</td>
-
-                </tr>
-                <tr>
-                    <td>L-002</td>
-                    <td>F-002</td>
-                    <td>S-002</td>
-                    <td>V-002</td>
-                    <td>E-002</td>
-                    <td>11:00 AM</td>
-                    <td>Monitoring</td>
-
-                </tr>
-                </tbody>
-            </table>
+                            <form action="#" id="loginForm">
+                                <div class="mb-3">
+                                    <label for="log-in-Username" class="form-label text-white">Email:</label>
+                                    <input type="email" id="log-in-Username" class="form-control" placeholder="Enter Your Email" data-validate="email">
+                                    <i class="uil uil-envelope-alt email"></i>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="log-in-Password" class="form-label text-white">Password:</label>
+                                    <div class="password-container">
+                                        <div class="input-group">
+                                            <input type="password" id="log-in-Password" class="form-control" placeholder="Enter Your Password" data-validate="required password">
+                                            <span class="input-group-text bg-white">
+                  <i class="bi bi-eye-slash"></i>
+                  <i class="uil uil-lock password"></i>
+                        <i class="uil uil-eye-slash pw_hide"></i>
+                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="remember-me">
+                                        <label for="remember-me" class="form-check-label text-white">Remember me</label>
+                                    </div>
+                                    <a href="#" class="text-white">Forgot Password?</a>
+                                </div>
+                                <button type="submit" class="btn btn-danger w-100" id="formsignIn">Login</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src = "./assets/js/scrypt.js"></script>
+<script src = "./assets/js/code.jquery.com_jquery-3.7.1.min.js"></script>
+<script src = "./assets/bootstrap/js/bootstrap.bundle.js"></script>
+<script src = "./assets/js/LoginFormController.js"></script>
+<script src = "./assets/js/validation.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script src="assets/js/scripts.js"></script>
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </body>
-
 </html>

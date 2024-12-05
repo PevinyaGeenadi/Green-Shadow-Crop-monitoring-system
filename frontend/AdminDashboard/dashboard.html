@@ -33,7 +33,7 @@
             animation: fadeIn 0.3s ease-in;
         }
         .nav-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: #C2FFC7; /* #9EDF9C */
         }
     </style>
 </head>
@@ -107,7 +107,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+    <div class="flex-1 overflow-x-hidden overflow-y-auto bg-[#F5F7F8] py-10">
         <div class="container mx-auto px-6 py-8">
             <!-- Dashboard Section -->
             <section id="dashboard" class="content-section active fade-in">
@@ -164,32 +164,1307 @@
                 </div>
             </section>
 
+            <!-- ################################################################################################################################## -->
 
 
 
+            <!-- ################################################### Crop Management Section ###################################################### -->
+            <section id="crops" class="content-section fade-in ">
+                <div class="container mx-auto px-2">
+                    <!-- Header -->
+                    <div class="mb-10 ">
+                        <h1 class="text-3xl font-bold text-gray-800">Crop Management</h1>
+                        <p class="text-[#62825D] text-lg mt-2">Simplify your crop management process.</p>
+                    </div>
+
+                    <!-- Search and Add Button Container -->
+                    <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-md shadow-md">
+                        <div class="relative w-96">
+                            <input type="text" id="searchInput" placeholder="Search crops..."
+                                   class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#526E48] focus:ring-2 focus:ring-[#C2FFC7] transition">
+                            <div class="absolute left-4 top-3.5 text-[#62825D]">
+                                <i class="fas fa-search text-lg"></i>
+                            </div>
+                        </div>
+                        <button onclick="toggleAddModal()"
+                                class="bg-[#399918] hover:bg-[#88D66C] text-white px-6 py-3 rounded-lg flex items-center gap-2 transition duration-300 shadow-md hover:shadow-xl">
+                            <i class="fas fa-plus"></i>
+                            Add Crop
+                        </button>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <!-- Add a container to enable vertical scrolling -->
+                            <div class="h-96" style="overflow-y: auto;">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-300">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Crop Id</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Image</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Crop Name</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Scientific Name</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Category</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Season</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200" id="cropTableBody">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Crop Modal -->
+                    <div id="addModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+                        <div class="bg-white w-[450px] p-6 rounded-xl shadow-2xl">
+                            <!-- Modal Header -->
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-xl font-semibold text-[#526E48]">Add New Crop</h3>
+                                <button onclick="toggleAddModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            <!-- Add Crop Form -->
+                            <form id="addCropForm" onsubmit="addCrop(event)" class="space-y-4">
+                                <!-- Crop Image -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Crop Image</label>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                                        <input type="file" id="cropImage" name="cropImage" accept="image/*"
+                                               class="hidden" onchange="previewImage(this, 'imagePreview')">
+                                        <label for="cropImage" class="cursor-pointer">
+                                            <img id="imagePreview" src="#" alt="Preview" class="mx-auto mb-2 hidden max-h-32">
+                                            <div class="text-gray-500">
+                                                <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
+                                                <p>Click to upload image</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Crop Name -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Crop Name</label>
+                                    <input type="text" name="cropName" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+
+                                <!-- Scientific Name -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Scientific Name</label>
+                                    <input type="text" name="scientificName" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+
+                                <!-- Category -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <select name="category" required
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="Vegetable">Vegetable</option>
+                                        <option value="Fruit">Fruit</option>
+                                        <option value="Grain">Grain</option>
+                                        <option value="Legume">Legume</option>
+                                    </select>
+                                </div>
+
+                                <!-- Season -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Season</label>
+                                    <select name="season" required
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="Spring">Spring</option>
+                                        <option value="Summer">Summer</option>
+                                        <option value="Fall">Fall</option>
+                                        <option value="Winter">Winter</option>
+                                    </select>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit"
+                                        class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg">
+                                    Add Crop
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Edit Modal (Similar structure to Add Modal) -->
+                    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                        <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-900">Edit Crop</h3>
+                                <button onclick="toggleEditModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <form id="editCropForm" onsubmit="updateCrop(event)" class="space-y-6">
+                                <input type="hidden" name="editId">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Crop Image</label>
+                                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                                                <input type="file" id="editCropImage" name="editCropImage" accept="image/*"
+                                                       class="hidden" onchange="previewImage(this, 'editImagePreview')">
+                                                <label for="editCropImage" class="cursor-pointer">
+                                                    <img id="editImagePreview" src="#" alt="Preview" class="mx-auto mb-2 hidden max-h-32">
+                                                    <div class="text-gray-500">
+                                                        <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
+                                                        <p>Click to update image</p>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Crop Name</label>
+                                            <input id="editCropName" type="text" name="editCropName" required
+                                                   class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Scientific Name</label>
+                                            <input id="editScientificName" type="text" name="editScientificName" required
+                                                   class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                            <select id="editCategory" name="editCategory" required
+                                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                                <option value="Vegetable">Vegetable</option>
+                                                <option value="Fruit">Fruit</option>
+                                                <option value="Grain">Grain</option>
+                                                <option value="Legume">Legume</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Season</label>
+                                            <select id="editSeason" name="editSeason" required
+                                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                                <option value="Spring">Spring</option>
+                                                <option value="Summer">Summer</option>
+                                                <option value="Fall">Fall</option>
+                                                <option value="Winter">Winter</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                                    Update Crop
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
+            <!-- ############################################################## Field Management Section #################################################################### -->
+            <!-- Other sections with placeholder content -->
+            <section id="field" class="content-section fade-in">
+                <div class="container mx-auto px-2">
+                    <!-- Header -->
+                    <div class="mb-10">
+                        <h1 class="text-3xl font-bold text-gray-800">Field Management</h1>
+                        <p class="text-gray-600">Manage your fields database efficiently</p>
+                    </div>
+
+                    <!-- Search and Add Button Container -->
+                    <div class="flex justify-between items-center mb-6 bg-white p-2 rounded-md shadow-md">
+                        <div class="relative w-96">
+                            <input type="text" id="searchInput" placeholder="Search fields..."
+                                   class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                            <div class="absolute left-4 top-3.5 text-gray-400">
+                                <i class="fas fa-search text-lg"></i>
+                            </div>
+                        </div>
+                        <button onclick="ftoggleAddModal()"
+                                class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md flex items-center gap-2 transition duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-plus"></i>
+                            Add Field
+                        </button>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="bg-white rounded-md shadow-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <div class="h-96" style="overflow-y: auto;">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-300">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Field Code</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Field Name</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Location</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Extent Size</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Image 1</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Image 2</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200" id="fieldTableBody">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Field Modal -->
+                    <div id="faddModal" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+                        <div class="bg-white max-w-md mx-auto mt-24 p-6 rounded-lg shadow-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Add New Field</h3>
+                                <button onclick="ftoggleAddModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+                            </div>
+                            <form id="addFieldForm" onsubmit="addField(event)">
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label for="fieldName" class="block text-sm font-medium text-gray-700">Field Name</label>
+                                        <input id="fieldName" name="fieldName" type="text" required
+                                               class="w-full rounded-md border-gray-300 focus:ring-2 focus:ring-green-300">
+                                    </div>
+                                    <div>
+                                        <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                                        <input id="location" name="location" type="text" required
+                                               class="w-full rounded-md border-gray-300 focus:ring-2 focus:ring-green-300">
+                                    </div>
+                                    <div>
+                                        <label for="extentSize" class="block text-sm font-medium text-gray-700">Extent Size</label>
+                                        <input id="extentSize" name="extentSize" type="text" required
+                                               class="w-full rounded-md border-gray-300 focus:ring-2 focus:ring-green-300">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Field Image 1</label>
+                                        <input type="file" name="fieldImage1" accept="image/*" class="block w-full text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Field Image 2</label>
+                                        <input type="file" name="fieldImage2" accept="image/*" class="block w-full text-sm">
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full mt-4 bg-green-500 text-white py-2 rounded-md hover:bg-green-600">Add Field</button>
+                            </form>
+                        </div>
+                    </div>
+
+                        <!-- Edit Field Modal -->
+                    <div id="feditModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                        <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-900">Edit Field</h3>
+                                <button onclick="ftoggleEditModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <form id="editFieldForm" onsubmit="updateField(event)" class="space-y-6">
+                                <input type="hidden" name="editId">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Field Name</label>
+                                        <input id="editfieldName" type="text" name="fieldName" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                        <input id="editlocation" type="text" name="location" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Extent Size</label>
+                                        <input id="editextentSize" type="text" name="extentSize" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Field Image 1</label>
+                                        <input id="editfieldImage1" type="file" name="fieldImage1" accept="image/*">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Field Image 2</label>
+                                        <input id="editfieldImage2" type="file" name="fieldImage2" accept="image/*">
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                                    Update Field
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ############################################################ Staff Management Section ########################################################## -->
 
 
+            <section id="staff" class="content-section fade-in">
+                <div class="container mx-auto px-2">
+                    <!-- Header -->
+                    <div class="mb-10">
+                        <h1 class="text-3xl font-bold text-gray-800">Staff Management</h1>
+                        <p class="text-gray-600">Manage your staff database efficiently</p>
+                    </div>
 
+                    <!-- Search and Add Button Container -->
+                    <div class="flex justify-between items-center mb-6 bg-white p-2 rounded-md shadow-md">
+                        <div class="relative w-96">
+                            <input type="text" id="searchInput" placeholder="Search staff..."
+                                   class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                            <div class="absolute left-4 top-3.5 text-gray-400">
+                                <i class="fas fa-search text-lg"></i>
+                            </div>
+                        </div>
+                        <button onclick="toggleAddStaffModal()"
+                                class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md flex items-center gap-2 transition duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-plus"></i>
+                            Add Staff
+                        </button>
+                    </div>
 
+                    <!-- Table -->
+                    <div class="bg-white rounded-md shadow-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <div class="h-96" style="overflow-y: auto;">
+                                <table class="min-w-full divide-y divide-gray-200" id="staffTable">
+                                    <thead class="bg-gray-300">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">ID</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">First Name</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Last Name</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Designation</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Gender</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Joined Date</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Date of Birth</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Address Line 1</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Address Line 2</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Address Line 3</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Address Line 4</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Address Line 5</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Contact Number</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Email</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Role</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200" id="staffTableBody">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-
-
-
-
-
-
-
+                    <!-- Add Staff Modal -->
+                    <div id="addStaffModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                        <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-900">Add New Staff</h3>
+                                <button onclick="toggleAddStaffModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <form id="addStaffForm" onsubmit="saveStaff(event)" class="space-y-6">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <!-- Form Fields -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                        <input type="text" name="firstName" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                        <input type="text" name="lastName" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Designation</label>
+                                        <input type="text" name="designation" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                                        <select name="gender" required
+                                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                            <option value="MALE">MALE</option>
+                                            <option value="FEMALE">FEMALE</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Joined Date</label>
+                                        <input type="date" name="joinedDate" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                        <input type="date" name="dob" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                                        <input type="tel" name="contactNo" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" name="email" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                        <select name="role" required id="role"
+                                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                            <option value="MANAGER">MANAGER</option>
+                                            <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                                            <option value="SCIENTIST">SCIENTIST</option>
+                                            <option value="OTHER">OTHER</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 1</label>
+                                        <input type="address" name="address1" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 2</label>
+                                        <input type="address" name="address2" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 3</label>
+                                        <input type="address" name="address3" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 4</label>
+                                        <input type="address" name="address4" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 5</label>
+                                        <input type="address" name="address5" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                        class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg">
+                                    Save Staff
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Staff Update form -->
+                    <div id="updateStaffModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                        <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-900">Update Staff</h3>
+                                <button onclick="toggleUpdateStaffModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <form id="updateStaffForm" onsubmit="updateStaff(event)" class="space-y-6">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <!-- Form Fields: Replicated from Add Staff Modal -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                        <input id="editfirstName" type="text" name="firstName" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                        <input id="editlastName" type="text" name="lastName" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Designation</label>
+                                        <input id="editdesignation" type="text" name="designation" required
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                                        <select name="gender" required id="editgender"
+                                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                            <option value="MALE">MALE</option>
+                                            <option value="FEMALE">FEMALE</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Joined Date</label>
+                                        <input type="date" name="joinedDate" required id="editjoinedDate"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                        <input type="date" name="dob" required id="editdob"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                                        <input type="tel" name="contactNo" required id="editcontactNo"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" name="email" required id="editemail"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                        <select name="role" required id="editrole"
+                                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                            <option value="MANAGER">MANAGER</option>
+                                            <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                                            <option value="SCIENTIST">SCIENTIST</option>
+                                            <option value="OTHER">OTHER</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 1</label>
+                                        <input type="address" name="address1" required id="editaddress1"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 2</label>
+                                        <input type="address" name="address2" required id="editaddress2"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 3</label>
+                                        <input type="address" name="address3" required id="editaddress3"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 4</label>
+                                        <input type="address" name="address4" required id="editaddress4"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Address 5</label>
+                                        <input type="address" name="address5" required id="editaddress5"
+                                               class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                                    Update Staff
+                                </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
         </div>
+        </section>
+
+
+        <!-- ################################################################ Vehical Management Section ############################################################## -->
+        <section id="vehical" class="content-section fade-in">
+            <div class="container mx-auto px-2">
+                <!-- Header -->
+                <div class="mb-10">
+                    <h1 class="text-3xl font-bold text-gray-800">Vehicle Management</h1>
+                    <p class="text-gray-600">Manage your vehicle fleet efficiently</p>
+                </div>
+
+                <!-- Search and Add Button Container -->
+                <div class="flex justify-between items-center mb-6 bg-white p-2 rounded-md shadow-md">
+                    <div class="relative w-96">
+                        <input type="text" id="searchInput" placeholder="Search vehicle..."
+                               class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                        <div class="absolute left-4 top-3.5 text-gray-400">
+                            <i class="fas fa-search text-lg"></i>
+                        </div>
+                    </div>
+                    <button onclick="toggleAddVehicleModal()"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md flex items-center gap-2 transition duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-plus"></i>
+                        Add Vehicle
+                    </button>
+                </div>
+
+                <!-- Table -->
+                <div class="bg-white rounded-md shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="vehicleTable">
+                            <thead class="bg-gray-300 sticky top-0">
+                            <tr>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Vehicle Code</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">License Plate</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Category</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Fuel Type</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Remarks</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Staff-Id</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-900 uppercase tracking-wider">Actions</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="h-80 overflow-y-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="vehicleTableBody">
+                            <!-- Table rows will be populated by JavaScript -->
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Edit Vehicle Modal -->
+                <div id="editVehicleModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Edit Vehicle</h3>
+                            <button onclick="toggleEditVehicleModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form id="editVehicleForm" onsubmit="updateVehicle(event)" class="space-y-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <!-- Form Fields -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">License Plate</label>
+                                    <input type="text" name="licensePlate" required id="editlicensePlate"
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <input type="text" name="category" required id="editcategory"
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Fuel Type</label>
+                                    <select name="fuelType" required id="editfuelType"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Desel">Desel</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                    <select name="status" required id="editstatus"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="Available">Available</option>
+                                        <option value="UnAvailable">UnAvailable</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
+                                    <input type="text" name="remarks" id="editremarks"
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateStaffIdOnVehicle">Staff:</label>
+                                    <select id="updateStaffIdOnVehicle"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Update Vehicle
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Add Vehicle Modal -->
+                <div id="addVehicleModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Add New Vehicle</h3>
+                            <button onclick="toggleAddVehicleModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form id="addVehicleForm" onsubmit="addVehicle(event)" class="space-y-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <!-- Form Fields -->
+                                <!-- <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle Code</label>
+                                    <input type="text" name="vehicleCode" required
+                                        class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div> -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">License Plate</label>
+                                    <input type="text" name="licensePlate" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <input type="text" name="category" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Fuel Type</label>
+                                    <input type="text" name="fuelType" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                    <input type="text" name="status" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
+                                    <input type="text" name="remarks"
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div class="form-group text-gray-800">
+                                    <label for="staffIdOnVehicle">Staff Id</label>
+                                    <select id="staffIdOnVehicle" name="staffIdOnVehicle"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-gray-800">
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Add Vehicle
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- #################################################### Equipment Management Section ####################################################### -->
+
+        <section id="equipment" class="content-section fade-in">
+            <div class="container mx-auto px-2">
+                <!-- Header -->
+                <div class="mb-10">
+                    <h1 class="text-3xl font-bold text-gray-800">Equipment Management</h1>
+                    <p class="text-gray-600">Manage your equipment efficiently</p>
+                </div>
+
+                <!-- Search and Add Button Container -->
+                <div class="flex justify-between items-center mb-6 bg-white p-2 rounded-md shadow-md">
+                    <div class="relative w-96">
+                        <input type="text" id="searchInput" placeholder="Search equipment..."
+                               class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                        <div class="absolute left-4 top-3.5 text-gray-400">
+                            <i class="fas fa-search text-lg"></i>
+                        </div>
+                    </div>
+                    <button onclick="toggleAddEquipmentModal()"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md flex items-center gap-2 transition duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-plus"></i>
+                        Add Equipment
+                    </button>
+                </div>
+
+                <!-- Equipment Table -->
+                <div class="bg-white rounded-md shadow-lg overflow-hidden">
+                    <div class="overflow-auto h-96">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-300 sticky top-0 z-5">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Equipment ID</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Available Count</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Field Code</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Staff Id</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="equipmentTableBody">
+                            <!-- Table rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Add Equipment Modal -->
+                <div id="addEquipmentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Add New Equipment</h3>
+                            <button onclick="toggleAddEquipmentModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form id="addEquipmentForm" onsubmit="addEquipment(event)" class="space-y-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <!-- <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Equipment ID</label>
+                                    <input type="text" name="equipmentId" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div> -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <input type="text" name="name" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                    <input type="text" name="type" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Available Count</label>
+                                    <input type="number" name="availableCount" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                    <select name="eqstatus" required id="eqstatus"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="Available">Available</option>
+                                        <option value="Unavailable">Unavailable</option>
+                                    </select>
+                                </div>
+                                <div class="form-group text-gray-800">
+                                    <label for="staffIdOnEquipment">Staff ID</label>
+                                    <select id="staffIdOnEquipment" name="staffIdOnEquipment"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-gray-800">
+                                    </select>
+                                </div>
+                                <div class="form-group text-gray-800">
+                                    <label for="fieldIdOnEquipment">Field Id</label>
+                                    <select id="fieldIdOnEquipment" name="fieldIdOnEquipment"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-gray-800">
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Add Equipment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Edit Equipment Modal -->
+                <div id="editEquipmentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Edit Equipment</h3>
+                            <button onclick="toggleEditEquipmentModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form id="editEquipmentForm" onsubmit="updateEquipment(event)" class="space-y-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <!-- <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Equipment ID</label>
+                                    <input type="text" name="editequipmentId" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div> -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <input id="editname" type="text" name="editname" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                                    <input id="edittype" type="text" name="edittype" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Available Count</label>
+                                    <input id="editavailableCount" type="number" name="editavailableCount" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                    <select name="editstatus" required id="editstatus"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="Available">Available</option>
+                                        <option value="Unavailable">Unavailable</option>
+                                    </select>
+                                </div>
+                                <div class="form-group text-gray-800">
+                                    <label for="editstaffIdOnEquipment">Staff ID</label>
+                                    <select id="editstaffIdOnEquipment" name="editstaffIdOnEquipment"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-gray-800">
+                                    </select>
+                                </div>
+                                <div class="form-group text-gray-800">
+                                    <label for="editfieldIdOnEquipment">Field Id</label>
+                                    <select id="editfieldIdOnEquipment" name="editfieldIdOnEquipment"
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-gray-800">
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Update Equipment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ########################################################## User Management Section ############################################################ -->
+
+        <section id="user" class="content-section fade-in">
+            <div class="container mx-auto px-2">
+                <!-- Header -->
+                <div class="mb-10">
+                    <h1 class="text-3xl font-bold text-gray-800">User Management</h1>
+                    <p class="text-gray-600">Manage users with different roles efficiently</p>
+                </div>
+
+                <!-- Search and Add Button Container -->
+                <div class="flex justify-between items-center mb-6 bg-white p-2 rounded-md shadow-md">
+                    <div class="relative w-96">
+                        <input type="text" id="searchInput" placeholder="Search users..."
+                               class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                        <div class="absolute left-4 top-3.5 text-gray-400">
+                            <i class="fas fa-search text-lg"></i>
+                        </div>
+                    </div>
+                    <button onclick="toggleAddUserModal()"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md flex items-center gap-2 transition duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-plus"></i>
+                        Add User
+                    </button>
+                </div>
+
+                <!-- User Table -->
+                <div class="bg-white rounded-md shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <div class="h-96 overflow-y-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-300 sticky top-0">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">
+                                        Email
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">
+                                        Role
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" id="userTableBody">
+                                <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Add User Modal -->
+                <div id="addUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Add New User</h3>
+                            <button onclick="toggleAddUserModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form id="addUserForm" onsubmit="addUser(event)" class="space-y-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" name="email" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                    <input type="password" name="password" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                    <select name="role" required
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="" disabled selected>Select a role</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Employee">Employee</option>
+                                        <option value="Manager">Manager</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Add User
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Edit User Modal -->
+                <div id="editUserModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto p-8 border w-[600px] shadow-2xl rounded-xl bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Edit User</h3>
+                            <button onclick="toggleEditUserModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <form id="editUserForm" onsubmit="updateUser(event)" class="space-y-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" name="email" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                    <input type="password" name="password" required
+                                           class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                    <select name="role" required
+                                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200">
+                                        <option value="" disabled selected>Select a role</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Employee">Employee</option>
+                                        <option value="Manager">Manager</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 shadow-md hover:shadow-lg">
+                                Update User
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ####################################################### Log Page ########################################################## -->
+        <section id="log" class="content-section fade-in">
+            <div class="w-full mx-auto bg-white rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">Log Entry Form</h2>
+
+                <form id="logForm" onsubmit="addLog(event)" class="flex flex-wrap justify-between">
+                    <!-- Log Date -->
+                    <div class="mb-4">
+                        <label for="logDate" class="block text-sm font-medium text-gray-700 mb-1">
+                            Log Date
+                        </label>
+                        <input
+                                type="date"
+                                id="logDate"
+                                name="logDate"
+                                required
+                                class="w-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                    </div>
+
+                    <!-- Log Details -->
+                    <div class="mb-4">
+                        <label for="logDetails" class="block text-sm font-medium text-gray-700 mb-1">
+                            Log Details
+                        </label>
+                        <textarea
+                                id="logDetails"
+                                name="logDetails"
+                                rows="4"
+                                required
+                                placeholder="Enter your log details here..."
+                                class="w-64 h-11 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
+                        ></textarea>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="mb-6">
+                        <label for="logImage" class="block text-sm font-medium text-gray-700 mb-1">
+                            Add Image
+                        </label>
+                        <input
+                                type="file"
+                                id="logImage"
+                                name="logImage"
+                                accept="image/*"
+                                class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                            type="submit"
+                            class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                    >
+                        Submit Log
+                    </button>
+                </form>
+                <!-- update Form -->
+                <div id="updateLogModal" class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div class="relative top-20 mx-auto bg-white rounded-xl shadow-md p-6 w-[600px]">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800">Update Log Entry</h2>
+                            <button onclick="toggleUpdateLogModal()" class="text-gray-400 hover:text-gray-600 text-xl">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <form id="updateLogForm" onsubmit="updateLog(event)" class="flex flex-wrap justify-between">
+                            <!-- Log Date -->
+                            <div class="mb-4">
+                                <label for="updateLogDate" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Log Date
+                                </label>
+                                <input
+                                        type="date"
+                                        id="updateLogDate"
+                                        name="updateLogDate"
+                                        required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                >
+                            </div>
+
+                            <!-- Log Details -->
+                            <div class="mb-4 w-full">
+                                <label for="updateLogDetails" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Log Details
+                                </label>
+                                <textarea
+                                        id="updateLogDetails"
+                                        name="updateLogDetails"
+                                        rows="4"
+                                        required
+                                        placeholder="Update your log details here..."
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
+                                ></textarea>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="mb-6 w-full">
+                                <label for="updateLogImage" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Update Image
+                                </label>
+                                <input
+                                        type="file"
+                                        id="updateLogImage"
+                                        name="updateLogImage"
+                                        accept="image/*"
+                                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                >
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button
+                                    type="submit"
+                                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                            >
+                                Update Log
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-auto h-80 border border-gray-300 rounded-lg shadow-md mt-4">
+                <table id="logsTable" class="w-full border-collapse">
+                    <thead class="bg-gray-100">
+                    <tr>
+                        <th class="border px-4 py-2">Log Id</th>
+                        <th class="border px-4 py-2">Date</th>
+                        <th class="border px-4 py-2">Details</th>
+                        <th class="border px-4 py-2">Image</th>
+                        <th class="border px-4 py-2">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                    <!-- Logs will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ############################################ Add Log ################################################# -->
+        <section id="addLog" class="content-section fade-in">
+            <div class="container mx-auto px-2 py-2">
+
+                <!-- crop log form -->
+                <form id="addLogCrop" name="addLogCrop" class="bg-white p-2 rounded-lg shadow-md space-y-2 w-full">
+                    <h2 class="text-lg font-semibold text-gray-700">Add Crop Log</h2>
+                    <div>
+                        <select id="c-logId" name="c-logId" class="w-full px-3 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                            <option value="">Choose Log Id</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="c-cropId" name="c-cropId" class="w-full px-3 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                            <option value="">Choose Crop Id</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-32 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:ring-2 focus:ring-blue-400 focus:outline-none ">
+                            Save
+                        </button>
+                    </div>
+                </form>
+
+                <!-- log field form -->
+                <form id="addLogField" name="addLogField" class="bg-white p-2 rounded-lg shadow-md space-y-2 w-full mt-4">
+                    <h2 class="text-lg font-semibold text-gray-700">Add Field Log</h2>
+                    <div>
+                        <select id="f-logId" name="f-logId" class="w-full px-3 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                            <option value="">Choose Log Id</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="f-fieldId" name="f-fieldId" class="w-full px-3 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                            <option value="">Choose Field Id</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-32 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:ring-2 focus:ring-blue-400 focus:outline-none ">
+                            Save
+                        </button>
+                    </div>
+                </form>
+
+                <!-- log staff form -->
+                <form id="addLogStaff" name="addLogStaff" class="bg-white p-2 rounded-lg shadow-md space-y-2 w-full mt-4">
+                    <h2 class="text-lg font-semibold text-gray-700">Add Staff Log</h2>
+                    <div>
+                        <select id="s-logId" name="s-logId" class="w-full px-3 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                            <option value="">Choose Log Id</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="s-staffId" name="s-staffId" class="w-full px-3 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                            <option value="">Choose Staff Id</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-32 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:ring-2 focus:ring-blue-400 focus:outline-none ">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+</div>
 </div>
 
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Popper JS -->
+<script src="./assets/js/main.js"></script>
+<script src="./assets/js/Crop/cropPage.js"></script>
 
 
-
+<script src="./assets/js/Field/field.js"></script>
+<script src="./assets/js/Staff/staff.js"></script>
+<script src="./assets/js/Vehical/vehical.js"></script>
+<script src="./assets/js/Equipment/equipment.js"></script>
+<script src="./assets/js/User/user.js"></script>
+<script src="./assets/js/Log/LogPage.js"></script>
+<script src="./assets/js/ViewLog/viewLog.js"></script>
 </body>
-
-
-
-
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
