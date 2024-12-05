@@ -1,13 +1,13 @@
-package lk.ijse.spring.cropSystem;
+package lk.ijse.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CropsystemApplication {
+public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CropsystemApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
 
 }

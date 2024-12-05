@@ -1,10 +1,10 @@
-package lk.ijse.spring.cropSystem;
+package lk.ijse.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CropsystemApplicationTests {
+class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
